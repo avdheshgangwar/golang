@@ -1,6 +1,7 @@
 package main
 
 import (
+	"errors"
 	"fmt"
 	"os"
 	"strconv"
@@ -21,7 +22,25 @@ func main() {
 	//compareArray()
 	//twoDimenArray()
 	//reverseString()
-	createSlice()
+	//createSlice()
+	//CreateMapWithOutMake()
+	//CreateMapWithMake()
+	// var p int = 10
+	// var q int = 20
+	// fmt.Printf("p = %d and q = %d", p, q)
+	// //callByVlaues(p, q)
+	// //callByReference(&p, &q)
+	// fmt.Printf("\np = %d and q = %d", p, q)
+	//variadicFunction("red", "blue", "green", "yellow")
+	// defer secondDefer()
+	// firstDefer()
+	// defer thirdDefer()
+	// defer fourthDefer()
+	// fifthDefer()
+	// panicAndRecover(5)
+	// panicAndRecover(2)
+	// panicAndRecover(0)
+	// panicAndRecover(8)
 
 }
 
@@ -267,5 +286,126 @@ func createSlice() {
 	// Iterate using for loop
 	for e := 0; e < len(myslice); e++ {
 		fmt.Println(myslice[e])
+	}
+}
+
+//Create map with make function
+func CreateMapWithOutMake() {
+	var map1 map[string]string
+	if map1 == nil {
+
+		fmt.Println("True")
+	} else {
+
+		fmt.Println("False")
+	}
+	// Creating and initializing a map
+	// Using shorthand declaration and
+	// using map literals
+	map_2 := map[int]string{
+		91: "Go",
+		92: "Java",
+		93: ".net",
+		94: "php",
+	}
+	map_2[95] = "node"
+
+	fmt.Println(map_2)
+}
+
+// Creating a map Using make() function
+func CreateMapWithMake() {
+	var map1 = make(map[string]string)
+	fmt.Println(map1)
+
+	if map1 == nil {
+
+		fmt.Println("True")
+	} else {
+
+		fmt.Println("False")
+	}
+	map1["name"] = "Avdhesh"
+	map1["mobile"] = "7839293847"
+	map1["address"] = "Gurugram"
+	map1["education"] = "B.tech"
+	fmt.Println(map1)
+	//iterate map using for loop
+
+	for k, v := range map1 {
+		fmt.Println(k, v)
+	}
+
+	//add key value pair in the map
+	map1["nickname"] = "Bablu"
+	map1["Hobbies"] = "Dancing"
+	//update key value pair in the map
+	map1["address"] = "BLR"
+	fmt.Println(map1)
+	// Retrieving values with the help of keys
+
+	fmt.Println("Address: ", map1["address"])
+	// Checking the key is available or not in the map1 map
+	address, ok := map1["address"]
+	fmt.Println("\nKey present or not:", ok)
+	fmt.Println("Value:", address)
+	// Without value using the blank identifier It will only give check result
+	_, ok1 := map1["Hobbies"]
+	fmt.Println("Value:", ok1)
+	//Delete key from map1
+	delete(map1, "address")
+	fmt.Println(map1)
+
+}
+func callByVlaues(a, b int) int {
+	var o int
+	o = a
+	a = b
+	b = o
+
+	return o
+}
+func callByReference(a, b *int) int {
+	var o int
+	o = *a
+	*a = *b
+	*b = o
+
+	return o
+}
+func variadicFunction(s ...string) {
+	fmt.Println(s)
+}
+func firstDefer() {
+	fmt.Println("First")
+}
+func secondDefer() {
+	fmt.Println("Second")
+}
+func thirdDefer() {
+	fmt.Println("Third")
+}
+func fourthDefer() {
+	fmt.Println("Fourth")
+}
+func fifthDefer() {
+	fmt.Println("Fifth")
+}
+
+var result = 1
+
+func panicAndRecover(n int) {
+
+	defer func() {
+		if r := recover(); r != nil {
+			fmt.Println(r)
+		}
+	}()
+
+	if n == 0 {
+		panic(errors.New("Cannot multiply a number by zero"))
+	} else {
+		result *= n
+		fmt.Println("Output: ", result)
 	}
 }
