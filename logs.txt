@@ -1,0 +1,5 @@
+2022/10/12 23:18:47 Hello world!
+INFO: 2022/10/12 23:22:20 main.go:145: Starting the application...
+INFO: 2022/10/12 23:22:20 main.go:146: Something noteworthy happened
+WARNING: 2022/10/12 23:22:20 main.go:147: There is something you should know about
+ERROR: 2022/10/12 23:22:20 main.go:148: Something went wrong

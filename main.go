@@ -1,9 +1,12 @@
 package main
 
 import (
+	"encoding/json"
 	"errors"
 	"fmt"
+	"log"
 	"os"
+	"reflect"
 	"strconv"
 	"strings"
 	"unicode/utf8"
@@ -41,7 +44,119 @@ func main() {
 	// panicAndRecover(2)
 	// panicAndRecover(0)
 	// panicAndRecover(8)
+	//fmt.Println(rectangle{10.5, 25.10, "red"})
+	//CreateingInstanceWithStructType()
+	//fieldTagStruct()
+	//typeOfStruct()
+	//logIntoTheFile()
+	//creatingCustomerLogger()
 
+}
+
+//Deceleartion of the struct type
+type rectangle struct {
+	length  float64
+	breadth float64
+	color   string
+}
+
+//Createing instance of the strtuc type.
+
+type rectangle1 struct {
+	length  int
+	breadth int
+	color   string
+
+	geometry struct {
+		area      int
+		perimeter int
+	}
+}
+
+//Use Field Tags in the Definition of struct type.
+type Employee struct {
+	FirstName string `json:"firstname"`
+	LastName  string `json:"lastname"`
+	City      string `json:"city"`
+}
+
+func CreateingInstanceWithStructType() {
+	var rect rectangle1 // dot notation
+	rect.length = 10
+	rect.breadth = 20
+	rect.color = "Green"
+
+	rect.geometry.area = rect.length * rect.breadth
+	rect.geometry.perimeter = 2 * (rect.length + rect.breadth)
+
+	fmt.Println(rect)
+	fmt.Println("Area:\t", rect.geometry.area)
+	fmt.Println("Perimeter:", rect.geometry.perimeter)
+}
+func fieldTagStruct() {
+	json_string := `
+    {
+        "firstname": "Rocky",
+        "lastname": "Sting",
+        "city": "London"
+    }`
+	emp1 := new(Employee)
+	json.Unmarshal([]byte(json_string), emp1)
+	fmt.Println(emp1)
+
+	emp2 := new(Employee)
+	emp2.FirstName = "Ramesh"
+	emp2.LastName = "Soni"
+	emp2.City = "Mumbai"
+	jsonStr, _ := json.Marshal(emp2)
+	fmt.Printf("%s\n", jsonStr)
+}
+func typeOfStruct() {
+	rect2 := rectangle{length: 10, breadth: 20, color: "Green"}
+	fmt.Println(reflect.TypeOf(rect2))         // main.rectangle
+	fmt.Println(reflect.ValueOf(rect2).Kind()) // struct
+
+	rect3 := new(rectangle)
+	fmt.Println(reflect.TypeOf(rect3))         // *main.rectangle
+	fmt.Println(reflect.ValueOf(rect3).Kind()) // ptr
+}
+
+//Logging to a file
+func logIntoTheFile() {
+	// If the file doesn't exist, create it or append to the file
+	file, err := os.OpenFile("logs.txt", os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0666)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	log.SetOutput(file)
+
+	log.Println("Hello world!")
+}
+
+//Creating Custom Logger
+var (
+	WarningLogger *log.Logger
+	InfoLogger    *log.Logger
+	ErrorLogger   *log.Logger
+)
+
+func creatingCustomerLogger() {
+	InfoLogger.Println("Starting the application...")
+	InfoLogger.Println("Something noteworthy happened")
+	WarningLogger.Println("There is something you should know about")
+	ErrorLogger.Println("Something went wrong")
+}
+
+func init() {
+	file, err := os.OpenFile("logs.txt", os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0666)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	InfoLogger = log.New(file, "INFO: ", log.Ldate|log.Ltime|log.Lshortfile)
+	WarningLogger = log.New(file, "WARNING: ", log.Ldate|log.Ltime|log.Lshortfile)
+	ErrorLogger = log.New(file, "ERROR: ", log.Ldate|log.Ltime|log.Lshortfile)
 }
 
 func printfAndPrintln() {
