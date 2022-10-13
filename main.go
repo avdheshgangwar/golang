@@ -50,6 +50,7 @@ func main() {
 	//typeOfStruct()
 	//logIntoTheFile()
 	//creatingCustomerLogger()
+	//createInterface()
 
 }
 
